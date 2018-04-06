@@ -69,10 +69,41 @@ _names = set(locals().keys()) | {'_names'}
 class User(Base):
 	__table__ = t_users
 
+
 class UserSchema(Schema):
 	class Meta:
 		fields = ('userId', 'email', 'familyName', 'givenName', 'gender',
 			'dob', 'avartar', 'createdAt')
+
+
+class Baby(Base):
+	__table__ = t_babies
+
+
+class BabySchema(Schema):
+	class Meta:
+		fields = ('babyId', 'familyName', 'givenName', 'gender',
+			'dob', 'parentId', 'createdAt')
+
+
+class Location(Base):
+	__table__ = t_locations
+
+
+class LocationSchema(Schema):
+	class Meta:
+		fields = ('locationId', 'langitude', 'latitude', 'addr1', 'addr2', 'addr3', 'city', 'state', 'country', 'postcode')
+
+
+class Activity(Base):
+	__table__ = t_activities
+	location = relationship(Location)
+
+
+class ActivitySchema(Schema):
+	location = fields.Nested('LocationSchema')
+	class Meta:
+		fields = ('activityId', 'name', 'description', 'location')
 
 
 ##########################################################################

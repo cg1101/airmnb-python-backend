@@ -13,6 +13,6 @@ _name = __file__.split('/')[-1].split('.')[0]
 @bp.route(_name + '/', methods=['GET'])
 @api
 @caps()
-def get_users():
-	users = m.User.query.order_by(m.User.createdAt).all()
-	return jsonify(users=m.User.dump(users))
+def get_activities():
+	activities = m.Activity.query.order_by(m.Activity.name).all()
+	return jsonify(activities=m.Activity.dump(activities))
