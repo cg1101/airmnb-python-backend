@@ -90,4 +90,52 @@ For your convenience, you can create an alias command in your .bash_profile to q
 alias aa='cd ~/airmnb-python-backend; . venv/bin/activate; . setenv.sh'
 ```
 
+### Start server
 
+After you have setup database, you can start the server by running:
+```
+python manage.py runserver
+```
+
+### Test api
+
+When server is running, you can test api by running:
+```
+curl localhost:5000/health-check
+```
+
+This should return status code 200 and a text says 'OK'.
+
+Or you can test api endpoint by running:
+```
+curl localhost:5000/api/1.0/users/
+```
+
+If users table is empty, you will get an empty list:
+```
+{
+  "users": []
+}
+```
+
+You can add a user into users table and try this api again, it should return the user you just created, for example:
+```
+echo "insert into users values ('e0a5d16c-3bed-11e8-b467-0ed5f89f718b', 'John', 'Smith', 'male', '1970-01-01', 'jsmith@company.com', 'unknown', NULL, now());" | psql ${DATABASE_URI}
+```
+Then you will get:
+```
+{
+  "users": [
+    {
+      "avartar": null, 
+      "createdAt": "2018-04-09T12:09:57.489351+00:00", 
+      "dob": "1970-01-01", 
+      "email": "jsmith@company.com", 
+      "familyName": "John", 
+      "gender": "male", 
+      "givenName": "Smith", 
+      "userId": "e0a5d16c-3bed-11e8-b467-0ed5f89f718b"
+    }
+  ]
+}
+```
