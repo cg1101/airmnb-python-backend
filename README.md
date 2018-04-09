@@ -84,7 +84,7 @@ python manage.py db upgrade head
 
 ### Add convenience commands
 
-For your convenience, you can create an alias command in your .bash_profile to quickly jump to your working folder. For example, if you have cloned the repo to ~/airmnb-python-backend and you want to use a shortcut 'aa', then you can add:
+For your convenience, you can create an alias command in your .bash_profile to quickly jump to your working folder. For example, if you have cloned the repo to `~/airmnb-python-backend` and you want to use a shortcut `aa`, then you can add:
 
 ```
 alias aa='cd ~/airmnb-python-backend; . venv/bin/activate; . setenv.sh'
