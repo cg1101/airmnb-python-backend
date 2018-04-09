@@ -1,0 +1,8 @@
+#!/bin/bash
+
+alias db="psql $DATABASE_URI"
+alias migrate="python manage.py db migrate"
+alias upgrade="python manage.py db upgrade"
+alias downgrade="python manage.py db downgrade"
+alias m="python manage.py"
+alias start="python manage.py runserver"
