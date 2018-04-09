@@ -8,3 +8,7 @@ ALIASES="${FILE_DIR}/.aliases"
 if [ -e "$ALIASES" ]; then
 	source "$ALIASES"
 fi
+PYTHONSTARTUP_FILE="${FILE_DIR}/.pythonstartup"
+if [ -e "${PYTHONSTARTUP_FILE}" ]; then
+	export PYTHONSTARTUP="${PYTHONSTARTUP_FILE}"
+fi
