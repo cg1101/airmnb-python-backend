@@ -14,7 +14,7 @@ from marshmallow import Schema, fields
 from . import database, mode
 from .db import SS
 from .db import database as db
-from schema import *
+from .schema import *
 
 
 def set_schema(cls, schema_class, schema_key=None):

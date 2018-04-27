@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import cStringIO
+# import cStringIO
 import traceback
 from functools import wraps
 
@@ -42,11 +42,11 @@ def api(fn):
 			elif isinstance(result, Response):
 				resp = result
 			else:
-				raise RuntimeError, 'unexpected datatype returned from api handler'
-		except InvalidUsage, e:
+				raise RuntimeError('unexpected datatype returned from api handler')
+		except InvalidUsage as e:
 			resp = make_response(jsonify(e.to_dict()), e.status_code, {})
 			SS.rollback()
-		except HTTPException, e:
+		except HTTPException as e:
 			#
 			# Normally we should not end up being here because all api
 			# handlers are suppose to raise InvalidUsage and such Exceptions
@@ -57,14 +57,14 @@ def api(fn):
 			#
 			resp = make_response(jsonify({'error': '%s' % e}), e.code, {})
 			SS.rollback()
-		except Exception, e:
+		except Exception as e:
 			#
 			# Oops! Caught unhandled exception, log what happend
 			# and return an error response to client
 			#
-			out = cStringIO.StringIO()
-			traceback.print_exc(file=out)
-			current_app.logger.error('\033[1;31mERROR caught inside api:\033[0m\n%s\n' % out.getvalue())
+			# out = cStringIO.StringIO()
+			# traceback.print_exc(file=out)
+			# current_app.logger.error('\033[1;31mERROR caught inside api:\033[0m\n%s\n' % out.getvalue())
 
 			# TODO: hide debug information for production deployment
 			resp = make_response((jsonify({'error': '%s' % e}), 500, {}))
@@ -96,56 +96,56 @@ class validators:
 	@classmethod
 	def is_mandatory(cls, data, key, value):
 		if key not in data:
-			raise ValueError, _('mandatory parameter missing')
+			raise ValueError(_('mandatory parameter missing'))
 	@classmethod
 	def non_blank(cls, data, key, value):
 		if not isinstance(value, basestring) or not value.strip():
-			raise ValueError, _('must be non-blank string')
+			raise ValueError(_('must be non-blank string'))
 	@classmethod
 	def enum(cls, data, key, value, *options):
 		if value not in options:
-			raise ValueError, _('must be one of {0}').format(
-					','.join(options))
+			raise ValueError(_('must be one of {0}').format(
+					','.join(options)))
 	@classmethod
 	def is_number(cls, data, key, value, max_value=None, min_value=None,
 			le=None, lt=None, gt=None, ge=None):
 		if max_value is not None and value > max_value:
-			raise ValueError, _('value {0} must not be greater than {1}'
-				).format(value, max_value)
+			raise ValueError(_('value {0} must not be greater than {1}'
+				).format(value, max_value))
 		if min_value is not None and value < min_value:
-			raise ValueError, _('value {0} must not be less than {1}'
-				).format(value, min_value)
+			raise ValueError(_('value {0} must not be less than {1}'
+				).format(value, min_value))
 		if le and not value <= le:
-			raise ValueError, _('value {0} must be less than or equal to {1}'
-				).format(value, le)
+			raise ValueError(_('value {0} must be less than or equal to {1}'
+				).format(value, le))
 		if lt and not value < lt:
-			raise ValueError, _('value {0} must be less than {1}'
-				).format(value, lt)
+			raise ValueError(_('value {0} must be less than {1}'
+				).format(value, lt))
 		if ge and not value >= ge:
-			raise ValueError, _('value {0} must be greater than or equal to {1}'
-				).format(value, ge)
+			raise ValueError(_('value {0} must be greater than or equal to {1}'
+				).format(value, ge))
 		if gt and not value > gt:
-			raise ValueError, _('value {0} must be greater than {1}'
-				).format(value, gt)
+			raise ValueError(_('value {0} must be greater than {1}'
+				).format(value, gt))
 	@classmethod
 	def is_string(cls, data, key, value, length=None, max_length=None,
 			min_length=None):
 		if value is not None:
 			if not isinstance(value, basestring):
-				raise ValueError, _('value must of a string')
+				raise ValueError(_('value must of a string'))
 			if length is not None and len(value) != length:
-				raise ValueError, _('value length must be {0}'
-					).format(length)
+				raise ValueError(_('value length must be {0}'
+					).format(length))
 			if max_length is not None and len(value) > max_length:
-				raise ValueError, _('value length must not be longer than {0}'
-					).format(max_length)
+				raise ValueError(_('value length must not be longer than {0}'
+					).format(max_length))
 			if min_length is not None and len(value) < min_length:
-				raise ValueError, _('value length must not be shorter than {0}'
-					).format(min_length)
+				raise ValueError(_('value length must not be shorter than {0}'
+					).format(min_length))
 	@classmethod
 	def not_null(cls, data, key, value):
 		if value is None:
-			raise ValueError, _('value must not be None')
+			raise ValueError(_('value must not be None'))
 	@classmethod
 	def is_bool(cls, data, key, value):
 		if value is not None:
@@ -153,18 +153,18 @@ class validators:
 				# expression:
 				# value not in (False, True)
 				# won't work because 1 == True is always True
-				raise ValueError, _('value must be a boolean')
+				raise ValueError(_('value must be a boolean'))
 	@classmethod
 	def is_file(cls, data, key, value):
 		if value is not None:
 			if not isinstance(value, FileStorage):
-				raise ValueError, _('value must be of type FileStorage')
+				raise ValueError(_('value must be of type FileStorage'))
 
-	@classmethod
-	def is_list(cls, data, key, value):
-		if value is not None:
-			if not isinstance(value, list):
-				raise ValueError("value must be a list")
+	# @classmethod
+	# def is_list(cls, data, key, value):
+	# 	if value is not None:
+	# 		if not isinstance(value, list):
+	# 			raise ValueError('value must be a list')
 
 
 
@@ -187,11 +187,11 @@ class Field(object):
 				elif len(x) == 3:
 					func, args, kwargs = x
 				else:
-					raise ValueError, 'invalid validator specification %s' % x
+					raise ValueError('invalid validator specification %s' % x)
 			else:
 				func = x
 			if not callable(func) or not isinstance(args, tuple) or not isinstance(kwargs, dict):
-				raise ValueError, 'invalid validator specification: %s' % x
+				raise ValueError('invalid validator specification: %s' % x)
 			self.validators.append((func, args, kwargs))
 
 	def validate(self, data, output):
@@ -239,9 +239,9 @@ class Field(object):
 				# This is because validators of later fields
 				# may need to work on normalized values
 				#
-		except ValueError, exc:
+		except ValueError as exc:
 			raise InvalidUsage(_('{0}: {1}').format(key, exc))
-		except Exception, exc:
+		except Exception as exc:
 			# out = cStringIO.StringIO()
 			# traceback.print_exc(file=out)
 			# error = out.getvalue()
@@ -261,9 +261,9 @@ class MyForm(object):
 
 	def add_field(self, field):
 		if not isinstance(field, Field):
-			raise TypeError, 'field must be instance of class Field'
+			raise TypeError('field must be instance of class Field')
 		if field.name in self.field_by_name:
-			raise ValueError, 'a field named \'%s\' already exists' % field.name
+			raise ValueError('a field named \'%s\' already exists' % field.name)
 		self.field_names.append(field.name)
 		self.field_by_name[field.name] = field
 
@@ -273,7 +273,7 @@ class MyForm(object):
 				data = request.get_json() or {}
 				if use_args:
 					data.update(request.args)
-			except Exception, exc:
+			except Exception as exc:
 				raise InvalidUsage(_('error decoding json from incoming request'))
 		else:
 			data = request.values
@@ -293,4 +293,4 @@ class MyForm(object):
 		return output
 
 
-from v1_0 import api_1_0
+from .v1_0 import api_1_0

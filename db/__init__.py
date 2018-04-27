@@ -5,6 +5,6 @@ from flask_sqlalchemy import SQLAlchemy
 
 from .schema import metadata
 
-mode = 'app' if sys.modules.has_key('app') else 'shell'
+mode = 'app' if 'app' in sys.modules else 'shell'
 
 database = SQLAlchemy(metadata=metadata)
