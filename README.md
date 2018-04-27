@@ -1,4 +1,4 @@
-# airmnb-python-backend
+# flask-app
 
 
 ## Setup Development Environment
@@ -19,9 +19,9 @@ Please follow the instructions in https://virtualenv.pypa.io/en/stable/installat
 ### Clone code repo and install dependencies
 
 ```
-$ git clone https://github.com/cg1101/airmnb-python-backend
+$ git clone https://github.com/cg1101/flask-app
 
-$ cd airmnb-python-backend
+$ cd flask-app
 
 $ virtualenv venv
 
