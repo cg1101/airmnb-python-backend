@@ -36,7 +36,7 @@ $ pip install -r requirements.txt
 
 Plese use following command to create database
 ```
-createdb airmmb
+createdb myappdb
 ```
 
 #### Setup db uri
@@ -44,7 +44,7 @@ createdb airmmb
 Edit setenv.sh, set the ```DATABASE_URI``` to following value
 
 ```
-export DATABASE_URI=postgresql://localhost/airmnb
+export DATABASE_URI=postgresql://localhost/myappdb
 ```
 
 A more general pattern will be:
@@ -84,10 +84,10 @@ python manage.py db upgrade head
 
 ### Add convenience commands
 
-For your convenience, you can create an alias command in your .bash_profile to quickly jump to your working folder. For example, if you have cloned the repo to `~/airmnb-python-backend` and you want to use a shortcut `aa`, then you can add:
+For your convenience, you can create an alias command in your .bash_profile to quickly jump to your working folder. For example, if you have cloned the repo to `~/flask-app` and you want to use a shortcut `aa`, then you can add:
 
 ```
-alias aa='cd ~/airmnb-python-backend; . venv/bin/activate; . setenv.sh'
+alias aa='cd ~/flask-app; . venv/bin/activate; . setenv.sh'
 ```
 
 ### Start server
