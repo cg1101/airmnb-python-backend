@@ -1,0 +1,10 @@
+# https://docs.github.com/en/code-security/supply-chain-security/configuration-options-for-dependency-updates#about-the-dependabotyml-file
+# https://github.blog/2020-06-01-keep-all-your-packages-up-to-date-with-dependabot/
+
+version: 2
+updates:
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
