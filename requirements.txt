@@ -30,7 +30,7 @@ marshmallow==2.15.0
 #openpyxl==2.4.8
 #Pillow==3.4.1
 
-psycopg2==2.7.4
+psycopg2==2.8.6
 
 #py==1.4.34
 #pycrypto==2.6.1
