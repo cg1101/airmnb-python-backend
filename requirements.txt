@@ -6,7 +6,7 @@
 
 #docutils==0.12
 #et-xmlfile==1.0.1
-Flask==0.12.2
+Flask==1.1.2
 #Flask-Cors==3.0.3
 Flask-Migrate==2.7.0
 #Flask-OAuthlib==0.9.3
